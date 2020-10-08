@@ -173,7 +173,22 @@ yargs.command({
     handler: async (argv) => {
 
         // fileio.unzip("test.zip","tmp/");
-        // fileio.removeOldFiles(".");
+        fileio.removeMarkedFiles(".", ".old");
+
+        // Get latest asset links
+        //github.getLatestReleaseLink(user, repo);
+        
+
+    }
+});
+
+yargs.command({
+    command: 'upgrade',
+    describe: 'Upgrade from zip',
+    handler: async (argv) => {
+
+        // fileio.unzip("test.zip","tmp/");
+        fileio.upgradeFromZip("test.zip");
 
         // Get latest asset links
         //github.getLatestReleaseLink(user, repo);
