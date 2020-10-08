@@ -1,6 +1,8 @@
 const yargs = require('yargs');
 const github = require('./tools/github');
 const versionManager = require('./tools/versionManager');
+const fileio = require('./tools/fileIO');
+
 
 
 
@@ -52,7 +54,7 @@ yargs.command({
         
 
     }
-})
+});
 
 yargs.command({
     command: 'github-check',
@@ -120,7 +122,65 @@ yargs.command({
 
         
     }
-})
+});
+
+yargs.command({
+    command: 'unzip',
+    describe: 'Unzip test',
+    handler: async (argv) => {
+
+        // fileio.unzip("test.zip","tmp/");
+        fileio.unzipToTemp("test.zip");
+        // Get latest asset links
+        //github.getLatestReleaseLink(user, repo);
+        
+
+    }
+});
+
+yargs.command({
+    command: 'clear',
+    describe: 'Remove temp',
+    handler: async (argv) => {
+
+        // fileio.unzip("test.zip","tmp/");
+        fileio.deleteTemp();
+        // Get latest asset links
+        //github.getLatestReleaseLink(user, repo);
+        
+
+    }
+});
+
+yargs.command({
+    command: 'mark',
+    describe: 'Mark files',
+    handler: async (argv) => {
+
+        // fileio.unzip("test.zip","tmp/");
+        fileio.markFilesInDirectory("temp", ".new");
+
+        // Get latest asset links
+        //github.getLatestReleaseLink(user, repo);
+        
+
+    }
+});
+
+yargs.command({
+    command: 'rem-old',
+    describe: 'Remove old files',
+    handler: async (argv) => {
+
+        // fileio.unzip("test.zip","tmp/");
+        // fileio.removeOldFiles(".");
+
+        // Get latest asset links
+        //github.getLatestReleaseLink(user, repo);
+        
+
+    }
+});
 
 
 yargs.parse();
