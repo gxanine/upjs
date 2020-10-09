@@ -27,9 +27,6 @@ sample:
 ### Get the update
 >upjs github-get -u **[GIHUB USERNAME]** -r **[GITHUB REPO NAME]**
 
-### Get the update
->upjs github-get -u **[GIHUB USERNAME]** -r **[GITHUB REPO NAME]**
-
 
 Those are only the sample commands but you can get the full list of available commands with:
 >upjs --help
