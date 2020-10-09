@@ -37,7 +37,7 @@ Those are only the sample commands but you can get the full list of available co
 ## Build
 1. Clone this repo
 2. Run `npm install`
-3. Install ***nexe*** with `npm install nexe -g`
+3. Install ***[nexe](https://github.com/nexe/nexe/)*** with `npm install nexe -g`
 4. Run `nexe -t windows-x64-12.16.3`
 ---
 
