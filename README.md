@@ -38,7 +38,7 @@ Those are only the sample commands but you can get the full list of available co
 4. Run `nexe -t windows-x64-12.16.3`
 ---
 
-With ❤ and ☕ Greg
+With ❤ and ☕ by Greg
 
 ---
 This program is open-source and distributed under the GNU General Public License, see *LICENSE.md* for details.
