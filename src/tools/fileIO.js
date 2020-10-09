@@ -116,30 +116,6 @@ exports.markSpecificFiles = (dir, files, mark) => new Promise((resolve, reject) 
     .catch(err => console.log(err));
 })
 
-exports.removeMarkedFiles = (dir, mark) => {
-    let files = fs.readdirSync(dir);
-
-    // this is very important, otherwise it will remove all of the files!!!
-    files = files.filter(file => file.endsWith(mark));
-
-    files.forEach(file => {
-
-        const filePath = path.join(dir,file);
-
-        console.log(filePath);
-
-        // delete directory recursively
-        (async () => {
-            try {
-                // await del(filePath);
-            } catch (err) {
-                console.error(`Error while deleting ${filePath}.`);
-            }
-        })();
-
-    })
-
-}
 exports.moveMarkedFiles = (dir, mark, destination) => new Promise((resolve, reject) => {
     let files = fs.readdirSync(dir);
 
