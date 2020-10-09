@@ -2,7 +2,7 @@
 
 
 <p align="center">
-  <a href="https://nodejs.org/">
+  <a href="https://github.com/gilnicki/upjs/">
     <img
       alt="Node.js"
       src="https://github.com//gilnicki/upjs/blob/develop/res/logo.svg?raw=true"
