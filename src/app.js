@@ -185,10 +185,18 @@ yargs.command({
 yargs.command({
     command: 'upgrade',
     describe: 'Upgrade from zip',
-    handler: async (argv) => {
+    handler: (argv) => {
 
         // fileio.unzip("test.zip","tmp/");
-        fileio.upgradeFromZip("test.zip");
+        fileio.deleteTemp()
+        .then(() => {
+            return fileio.upgradeFromZip("test.zip");
+        })
+        .then(() => {
+            console.log();
+            console.log("☑ Files upgraded successfully!");
+        })
+        .catch(err => console.log(err));
 
         // Get latest asset links
         //github.getLatestReleaseLink(user, repo);
@@ -199,5 +207,8 @@ yargs.command({
 
 
 yargs.parse();
+
+// fileio.deleteTemp();
+// fileio.upgradeFromZip("test.zip");
 
 // console.log(yargs.argv);
