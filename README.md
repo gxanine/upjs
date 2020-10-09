@@ -34,8 +34,9 @@ Those are only the sample commands but you can get the full list of available co
 ## Build
 1. Clone this repo
 2. Run `npm install`
-3. Install ***[nexe](https://github.com/nexe/nexe/)*** with `npm install nexe -g`
-4. Run `nexe -t windows-x64-12.16.3`
+3. Install ***[pkg](https://github.com/vercel/pkg)*** with `npm install pkg -g`
+4. Run `npm run build`
+5. *Optional:* if you're on Windows run `npm run win-add-icon` to add an icon to your executable
 ---
 
 With ❤ and ☕ by Greg
