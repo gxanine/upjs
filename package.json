@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node .",
+    "build": "pkg src/app.js --output \"bin/upjs\"",
     "win-add-icon": "node src/add_icon.js"
   },
   "repository": {
