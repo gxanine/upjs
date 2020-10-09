@@ -41,6 +41,6 @@ Those are only the sample commands but you can get the full list of available co
 With ❤ and ☕ by Greg
 
 ---
-This program is open-source and distributed under the GNU General Public License, see *LICENSE.md* for details.
+This program is open-source and distributed under the MIT License, see *LICENSE.md* for details.
 
 
