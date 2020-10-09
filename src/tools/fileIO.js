@@ -276,6 +276,12 @@ exports.upgradeFromZip =  (zipPath) => {
                 console.log("☑ Unmarking new files...");
             })
             .then(() => {
+                return this.deleteTemp();
+            })
+            .then(() => {
+                console.log("☑ Temp deleted...");
+            })
+            .then(() => {
                 resolve();
             })
             .catch(err => reject(`There was an error during upgrade... ${err}`));
