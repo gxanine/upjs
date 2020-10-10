@@ -2,9 +2,10 @@ const yargs = require('yargs');
 const github = require('./tools/github');
 const versionManager = require('./tools/versionManager');
 const fileio = require('./tools/fileIO');
+const commands = require('./tools/commands');
 
 
-
+// TODO: Fix app.js to use promises with the rest of files
 
 yargs.command({
     command: 'github-get',
@@ -31,29 +32,7 @@ yargs.command({
 
         }
     },
-    handler: async (argv) => {
-
-        const simple = argv['simple'];
-        const user = argv['user'];
-        const repo = argv['repo'];
-
-        if (!simple) {
-            console.log("github: ");
-            console.log("   user: ", user);
-            console.log("   repo: ", repo);
-            console.log("   link: ", github.getLink(user, repo))
-        }
-
-        // Get latest asset links
-        //github.getLatestReleaseLink(user, repo);
-
-        // Downlaod the newest version
-        let result = await github.downloadLatestRelease(user, repo);
-        if (!result) return;
-        console.log(result);
-        
-
-    }
+    handler: commands.githubGet
 });
 
 yargs.command({
