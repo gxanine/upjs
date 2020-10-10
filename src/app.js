@@ -5,8 +5,6 @@ const fileio = require('./tools/fileIO');
 const commands = require('./tools/commands');
 
 
-// TODO: Fix app.js to use promises with the rest of files
-
 yargs.command({
     command: 'github-get',
     describe: 'Update the provided software',
