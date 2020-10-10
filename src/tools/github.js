@@ -81,6 +81,8 @@ const getLatestReleaseJson = (user, repo) => new Promise((resolve, reject) => {
     })
     .catch(err => {
         console.log('Could not get latest release... ')
+        if (err.message.toLowerCase() === "not found")
+            reject("Repository or release could not be found!")
         reject(err);
     });
 
