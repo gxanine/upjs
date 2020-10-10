@@ -4,19 +4,21 @@ const path = require('path');
 const del = require('del');
 const extract = require('extract-zip');
 
-exports.downloadFile = (url, output) => {
+exports.downloadFile = (url, output) => new Promise((resolve, reject) => {
+
     try {
         const file = fs.createWriteStream(output);
         https.get(url, (response) => {
             response.pipe(file);
+            resolve();
         });
         
-        return true;
     } catch (error) {
         console.log("Something went wrong downloading the file...");
-        return false;
+        reject();
     }
-}
+
+})
 
 exports.renameFile = (from, destination) => {
     fs.rename(from, destination, (err) => {

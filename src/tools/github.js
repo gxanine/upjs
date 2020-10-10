@@ -19,10 +19,8 @@ const getAssetId = (release) => {
         });;
 
 
-
-        if (assetId) {
-            return assetId;
-        }
+        return assetId;
+        
     } catch (error) {
         console.log('[getAssetId]');
         console.log("ooops... Error: ", error);
@@ -71,48 +69,64 @@ const getAssetName = (release, id) => {
     
 }
 
-const getLatestReleaseJson = async (user, repo) => {
-    const response = await octokit.request('GET /repos/{owner}/{repo}/releases/latest', {
+const getLatestReleaseJson = (user, repo) => new Promise((resolve, reject) => {
+
+    octokit.request('GET /repos/{owner}/{repo}/releases/latest', {
         owner: user,
         repo: repo
-    }).catch(error => console.log('Something went wrong... Did you use the correct user and repo?'));
+    })
+    .then((response) => {
+        if (!response) reject();
+        resolve(response['data']);
+    })
+    .catch(err => {
+        console.log('Could not get latest release... ')
+        reject(err);
+    });
+
+
+})
     
-    //console.log(response);
-    if (!response) return;
-    return response['data'];
-}
 
-exports.getLatestReleaseVersion = async (user, repo) => {
-    try {
-        let releaseJson = await getLatestReleaseJson(user, repo); 
-        if (!releaseJson) return;
 
-        return releaseJson['tag_name'];
-    } catch (error) {
-        console.log('[getLatestReleaseVersion]');
-        console.log(error);
-    }
-}
+exports.getLatestReleaseVersion = (user, repo) => new Promise((resolve, reject) => {
 
-exports.downloadLatestRelease = async (user, repo) => {
-    try {
-        let releaseJson = await getLatestReleaseJson(user, repo);
-        if (!releaseJson) return;
-
-        let assetID = getAssetId(releaseJson);
-        let url = getAssetLink(releaseJson, assetID);
-        let path = getAssetName(releaseJson, assetID);
+        getLatestReleaseJson(user, repo)
+        .then((releaseJson) => {
+            if (!releaseJson) reject();
+            resolve(releaseJson['tag_name'])
+        }) 
+        .catch(err => {
+            console.log('Could not get latest version... ')
+            reject(err);
+        });
     
-    
-        // console.log(`ID: '${assetID}', Url: '${url}', Path: '${path}'`);
-        
-        return fileio.downloadFile(url, path);
-    } catch (error) {
-        console.log('[downloadLatestRelease]');
-        console.log(error);
-        return false;
-    }
-}
+})
+
+exports.downloadLatestRelease =  (user, repo) => new Promise((resolve, reject) => {
+
+        getLatestReleaseJson(user, repo)
+        .then((releaseJson) => {
+            if (!releaseJson) reject();
+
+            let assetID = getAssetId(releaseJson);
+            if (assetID == '') return reject("Could not find update package...");
+            
+            let url = getAssetLink(releaseJson, assetID);
+            let path = getAssetName(releaseJson, assetID);
+            return fileio.downloadFile(url,path);
+        })
+        .then(() => {
+            resolve();
+        })
+        .catch(err => {
+            console.log('Could not download latest release... ')
+            reject(err);
+        });
+
+        //return false;
+
+})
 
 exports.getLink = (user, repo) => {
     return `https://github.com/${user}/${repo}`
