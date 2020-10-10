@@ -11,7 +11,7 @@ const getAssetId = (release) => {
         let assetId = "";
 
         release['assets'].forEach(element => {
-            if (element['name'].includes(".msi"))
+            if (element['name'].includes(".zip"))
             {
                 assetId = element['id'];
                 return false;
