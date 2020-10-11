@@ -94,7 +94,7 @@ yargs.command({
     describe: 'Upgrade from zip',
     handler: (argv) => {
 
-        // fileio.unzip("test.zip","tmp/");
+        
         fileio.deleteTemp()
         .then(() => {
             return fileio.upgradeFromZip("test.zip");
@@ -114,8 +114,3 @@ yargs.command({
 
 
 yargs.parse();
-
-// fileio.deleteTemp();
-// fileio.upgradeFromZip("test.zip");
-
-// console.log(yargs.argv);
