@@ -70,7 +70,22 @@ exports.githubCheck = (argv) => {
 
 }
 
-
 exports.clear = () => {
     fileio.deleteTemp();
+}
+
+exports.upgrade = (argv) => {
+        
+    fileio.deleteTemp()
+    .then(() => {
+        return fileio.upgradeFromZip("test.zip");
+    })
+    .then(() => {
+        log.debug();
+        log.debug("☑ Files upgraded successfully!");
+    })
+    .catch(err => console.log(err));
+
+    
+
 }

@@ -92,24 +92,7 @@ yargs.command({
 yargs.command({
     command: 'upgrade',
     describe: 'Upgrade from zip',
-    handler: (argv) => {
-
-        
-        fileio.deleteTemp()
-        .then(() => {
-            return fileio.upgradeFromZip("test.zip");
-        })
-        .then(() => {
-            console.log();
-            console.log("☑ Files upgraded successfully!");
-        })
-        .catch(err => console.log(err));
-
-        // Get latest asset links
-        //github.getLatestReleaseLink(user, repo);
-        
-
-    }
+    handler: commands.upgrade
 });
 
 
