@@ -39,15 +39,20 @@ exports.moveFile = (source, destination) => new Promise((resolve, reject) => {
 })
 
 
-exports.unzip = async (source, destination) => {
-    await extract(source, {dir: path.join(process.cwd(), destination)}, () => {
+exports.unzip = (source, destination) => new Promise((resolve, reject) => {
+    extract(source, {dir: path.join(process.cwd(), destination)})
+    .then(() => resolve())
+    .catch((err) => {
         console.log("Something went wrong during unpacking...");
-    })
-}
-exports.unzipToTemp = async (source) => {
-    await this.unzip(source, "temp/");
-}
-exports.deleteTemp = () => new Promise((resolve, reject) =>{
+        reject(err);
+    });
+})
+exports.unzipToTemp = (source) => new Promise((resolve, reject) => {
+    this.unzip(source, "temp/")
+    .then(() => resolve())
+    .catch(err => reject(err));
+})
+exports.deleteTemp = () => new Promise((resolve, reject) => {
     // directory path
     const dir = 'temp/';
 
