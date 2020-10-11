@@ -69,41 +69,12 @@ yargs.command({
 });
 
 yargs.command({
-    command: 'unzip',
-    describe: 'Unzip test',
-    handler: async (argv) => {
-
-        // fileio.unzip("test.zip","tmp/");
-        fileio.unzipToTemp("test.zip");
-        // Get latest asset links
-        //github.getLatestReleaseLink(user, repo);
-        
-
-    }
-});
-
-yargs.command({
     command: 'clear',
     describe: 'Remove temp',
     handler: async (argv) => {
 
         // fileio.unzip("test.zip","tmp/");
         fileio.deleteTemp();
-        // Get latest asset links
-        //github.getLatestReleaseLink(user, repo);
-        
-
-    }
-});
-
-yargs.command({
-    command: 'mark',
-    describe: 'Mark files',
-    handler: async (argv) => {
-
-        // fileio.unzip("test.zip","tmp/");
-        fileio.markFilesInDirectory("temp", ".new");
-
         // Get latest asset links
         //github.getLatestReleaseLink(user, repo);
         
