@@ -71,15 +71,7 @@ yargs.command({
 yargs.command({
     command: 'clear',
     describe: 'Remove temp',
-    handler: async (argv) => {
-
-        // fileio.unzip("test.zip","tmp/");
-        fileio.deleteTemp();
-        // Get latest asset links
-        //github.getLatestReleaseLink(user, repo);
-        
-
-    }
+    handler: commands.clear
 });
 
 yargs.command({

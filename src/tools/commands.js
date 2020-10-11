@@ -69,3 +69,8 @@ exports.githubCheck = (argv) => {
     .catch(err => log.error(err));
 
 }
+
+
+exports.clear = () => {
+    fileio.deleteTemp();
+}
