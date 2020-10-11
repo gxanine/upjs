@@ -7,17 +7,32 @@ const log = require('./log');
 
 exports.downloadFile = (url, output) => new Promise((resolve, reject) => {
 
-    try {
-        const file = fs.createWriteStream(output);
-        https.get(url, (response) => {
-            response.pipe(file);
-            resolve();
+    const file = fs.createWriteStream(output);
+    https.get(url, (response) => {
+
+        let len = parseInt(response.headers['content-length'], 10);
+        let cur = 0;
+        let total = len / 1048576; //1048576 - bytes in  1Megabyte
+
+        response.pipe(file);
+        file.on('finish', () => {
+            console.log();
+            file.close(() => resolve());  // close() is async, call cb after close completes.
         });
-        
-    } catch (error) {
-        log.error("Something went wrong downloading the file...");
-        reject();
-    }
+
+        // response.on('data', (data) => {
+        //     console.log("ahavavavvwad");
+        // });
+
+        response.on("data", function(chunk) {
+            cur += chunk.length;
+            log.progress("Downloading:",(100.0 * cur / len).toFixed(2));
+            // console.log("Downloading " + (100.0 * cur / len).toFixed(2) + "% " + (cur / 1048576).toFixed(2) + " mb " + "Total size: " + total.toFixed(2) + " mb");
+        });
+    }).on('error', (err) => { // Handle errors
+        fs.unlink(output); // Delete the file async. (But we don't check the result)
+        reject(err)
+    });
 
 })
 
