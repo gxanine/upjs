@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const del = require('del');
 const extract = require('extract-zip');
+const log = require('./log');
 
 exports.downloadFile = (url, output) => new Promise((resolve, reject) => {
 
@@ -14,7 +15,7 @@ exports.downloadFile = (url, output) => new Promise((resolve, reject) => {
         });
         
     } catch (error) {
-        console.log("Something went wrong downloading the file...");
+        log.error("Something went wrong downloading the file...");
         reject();
     }
 
@@ -22,7 +23,7 @@ exports.downloadFile = (url, output) => new Promise((resolve, reject) => {
 
 exports.renameFile = (from, destination) => {
     fs.rename(from, destination, (err) => {
-        if ( err ) console.log('ERROR: ' + err);
+        if ( err ) log.error('ERROR: ' + err);
     });
 }
 
@@ -43,7 +44,7 @@ exports.unzip = (source, destination) => new Promise((resolve, reject) => {
     extract(source, {dir: path.join(process.cwd(), destination)})
     .then(() => resolve())
     .catch((err) => {
-        console.log("Something went wrong during unpacking...");
+        log.error("Something went wrong during unpacking...");
         reject(err);
     });
 })
@@ -83,7 +84,7 @@ exports.markFilesInDirectory = (dir, mark) => new Promise((resolve, reject) => {
         Promise.all(promises).then(() => {
             resolve();
         })
-        .catch(err => console.log(err));
+        .catch(err => log.error(err));
 
     });
 });
@@ -105,7 +106,7 @@ exports.markSpecificFiles = (dir, files, mark) => new Promise((resolve, reject) 
     Promise.all(promises).then((err) => {
         resolve();
     })
-    .catch(err => console.log(err));
+    .catch(err => log.error(err));
 })
 
 exports.moveMarkedFiles = (dir, mark, destination) => new Promise((resolve, reject) => {
@@ -123,7 +124,7 @@ exports.moveMarkedFiles = (dir, mark, destination) => new Promise((resolve, reje
     Promise.all(promises).then(() => {
         resolve();
     })
-    .catch(err => console.log(err));
+    .catch(err => log.error(err));
 
 });
 exports.unmarkFiles = (dir, mark) => new Promise((resolve, reject) => {
@@ -146,7 +147,7 @@ exports.unmarkFiles = (dir, mark) => new Promise((resolve, reject) => {
     Promise.all(promises).then(() => {
         resolve();
     })
-    .catch(err => console.log(err));
+    .catch(err => log.error(err));
 
     
 });
@@ -159,32 +160,32 @@ exports.upgradeFromZip =  (zipPath) => {
 
         this.unzipToTemp(zipPath)
             .then(() => {
-                console.log("☑ Unzipping...")
+                log.debug("☑ Unzipping...")
                 return this.getListOfFilesToUpgrade()
             })
             .then((_files) => {
                 files = _files
-                console.log("☑ Getting list of files to upgrade...");
+                log.debug("☑ Getting list of files to upgrade...");
                 return this.markFilesInDirectory("temp", ".new")
             })
             .then(() => {
-                console.log("☑ Marking files for upgrade in temp...");
+                log.debug("☑ Marking files for upgrade in temp...");
                 return this.markSpecificFiles(".", files, ".old")
             })
             .then(() => {
-                console.log("☑ Marking files for upgrade in main...");
+                log.debug("☑ Marking files for upgrade in main...");
                 return this.moveMarkedFiles("temp", ".new", ".");
             })
             .then(() => {
-                console.log("☑ Moving new files...");
+                log.debug("☑ Moving new files...");
                 return this.unmarkFiles(".", ".new");
             })
             .then(() => {
-                console.log("☑ Unmarking new files...");
+                log.debug("☑ Unmarking new files...");
                 return this.deleteTemp();
             })
             .then(() => {
-                console.log("☑ Temp deleted...");
+                log.debug("☑ Temp deleted...");
                 resolve();
             })
             .catch(err => reject(`There was an error during upgrade... ${err}`));

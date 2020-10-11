@@ -1,5 +1,6 @@
 const {Octokit} = require('@octokit/core');
 const fileio = require('./fileIO');
+const log = require('./log');
 
 const octokit = new Octokit();
 
@@ -22,8 +23,8 @@ const getAssetId = (release) => {
         return assetId;
         
     } catch (error) {
-        console.log('[getAssetId]');
-        console.log("ooops... Error: ", error);
+        log.debug('[getAssetId]');
+        log.error("Error getting asset id: ", error);
     }
 
    
@@ -80,7 +81,7 @@ const getLatestReleaseJson = (user, repo) => new Promise((resolve, reject) => {
         resolve(response['data']);
     })
     .catch(err => {
-        console.log('Could not get latest release... ')
+        log.error('Could not get latest release... ')
         if (err.message.toLowerCase() === "not found")
             reject("Repository or release could not be found!")
         reject(err);
@@ -99,7 +100,7 @@ exports.getLatestReleaseVersion = (user, repo) => new Promise((resolve, reject) 
             resolve(releaseJson['tag_name'])
         }) 
         .catch(err => {
-            console.log('Could not get latest version... ')
+            log.error('Could not get latest version... ')
             reject(err);
         });
     
@@ -122,7 +123,7 @@ exports.downloadLatestRelease =  (user, repo) => new Promise((resolve, reject) =
             resolve();
         })
         .catch(err => {
-            console.log('Could not download latest release... ')
+            log.error('Could not download latest release... ')
             reject(err);
         });
 

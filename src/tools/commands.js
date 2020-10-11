@@ -1,6 +1,8 @@
 // const yargs = require('yargs');
 const github = require('./github');
 const versionManager = require('./versionManager');
+const config = require('../config');
+const log = require('./log');
 // const fileio = require('./tools/fileIO');
 
 
@@ -8,16 +10,15 @@ const versionManager = require('./versionManager');
 exports.githubGet = (argv) => {
 
 
-    const simple = argv['simple'];
+    config.simple = argv['simple'];
     const user = argv['user'];
     const repo = argv['repo'];
 
-    if (!simple) {
-        console.log("github: ");
-        console.log("   user: ", user);
-        console.log("   repo: ", repo);
-        console.log("   link: ", github.getLink(user, repo))
-    }
+    log.debug("github: ");
+    log.debug("   user: ", user);
+    log.debug("   repo: ", repo);
+    log.debug("   link: ", github.getLink(user, repo))
+
 
     // Get latest asset links
     //github.getLatestReleaseLink(user, repo);
@@ -27,17 +28,17 @@ exports.githubGet = (argv) => {
     github.downloadLatestRelease(user, repo)
     .then(() => {
         // if (!result) return;
-        // console.log(result);
-        return console.log(true);
+        // log.log(result);
+        return log.info(true);
     })
-    .catch(err => console.error(err));
+    .catch(err => log.error(err));
 
 
 }
 
 exports.githubCheck = (argv) => {
 
-    const simple = argv['simple'];
+    config.simple = argv['simple'];
     const user = argv['user'];
     const repo = argv['repo'];
     const current = argv['current'];
@@ -48,23 +49,23 @@ exports.githubCheck = (argv) => {
 
         if (!latest) return reject("Could not find the latest version...");
 
-        if (!simple) {
-            console.log("github: ");
-            console.log("   user: ", user);
-            console.log("   repo: ", repo);
-            console.log("   current: ", repo);
-            console.log("   link: ", github.getLink(user, repo))
-            console.log(`Current: '${current}' Latest: '${latest}'`);
+        if (!config.simple) {
+            log.debug("github: ");
+            log.debug("   user: ", user);
+            log.debug("   repo: ", repo);
+            log.debug("   current: ", repo);
+            log.debug("   link: ", github.getLink(user, repo))
+            log.debug(`Current: '${current}' Latest: '${latest}'`);
         } else {
             let comaprisonResult = versionManager.comapreVersions(current, latest)
             if (comaprisonResult < 0) // Current is smaller
-                console.log(latest)
+                log.info(latest)
             else if (comaprisonResult === undefined)
                 return;
             else // if versions are the same or the current one is greater
-                console.log(false)
+                log.info(false)
         }
     })
-    .catch(err => console.log(err));
+    .catch(err => log.error(err));
 
 }
