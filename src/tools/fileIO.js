@@ -56,10 +56,14 @@ exports.deleteTemp = () => new Promise((resolve, reject) => {
     // directory path
     const dir = 'temp/';
 
-    // delete directory recursively
-    del(dir)
-    .then(() => resolve())
-    .catch(err => reject(`Error while deleting '${dir}'... ${err}`));
+    try {
+        del.sync(dir);
+        resolve();
+
+    } catch (error) {
+        reject(error);
+    }
+
 })
 
 
