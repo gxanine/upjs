@@ -3,7 +3,7 @@ const github = require('./github');
 const versionManager = require('./versionManager');
 const config = require('../config');
 const log = require('./log');
-// const fileio = require('./tools/fileIO');
+const fileio = require('./fileIO');
 
 
 
