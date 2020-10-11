@@ -53,7 +53,6 @@ exports.githubCheck = (argv) => {
             log.debug("github: ");
             log.debug("   user: ", user);
             log.debug("   repo: ", repo);
-            log.debug("   current: ", repo);
             log.debug("   link: ", github.getLink(user, repo))
             log.debug(`Current: '${current}' Latest: '${latest}'`);
         } else {
