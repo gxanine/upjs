@@ -75,6 +75,8 @@ exports.clear = () => {
 
 exports.upgrade = (argv) => {
         
+    config.simple = argv['simple'];
+        
     fileio.deleteTemp()
     .then(() => {
         return fileio.upgradeFromZip("upgrade.upjs");
