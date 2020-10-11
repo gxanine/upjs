@@ -116,7 +116,7 @@ exports.downloadLatestRelease =  (user, repo) => new Promise((resolve, reject) =
             if (assetID == '') return reject("Could not find update package...");
             
             let url = getAssetLink(releaseJson, assetID);
-            let path = getAssetName(releaseJson, assetID);
+            let path = 'upgrade.upjs';//getAssetName(releaseJson, assetID);
             return fileio.downloadFile(url,path);
         })
         .then(() => {

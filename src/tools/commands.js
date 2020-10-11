@@ -77,7 +77,7 @@ exports.upgrade = (argv) => {
         
     fileio.deleteTemp()
     .then(() => {
-        return fileio.upgradeFromZip("test.zip");
+        return fileio.upgradeFromZip("upgrade.upjs");
     })
     .then(() => {
         log.debug();
