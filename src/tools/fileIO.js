@@ -92,6 +92,43 @@ exports.deleteTemp = () => new Promise((resolve, reject) => {
 
 })
 
+exports.delete = (path) => new Promise((resolve, reject) => {
+
+    try {
+        del.sync(path);
+        resolve();
+
+    } catch (error) {
+        reject(error);
+    }
+})
+
+
+exports.removeMarkedFiles = (dir, mark) => new Promise((resolve, reject) => {
+
+    // list all files in the directory
+    fs.readdir(dir, (err, files) => {
+        if (err) {
+            throw err;
+        }
+
+        files = files.filter(file => file.endsWith(mark));
+
+        let promises = [];
+        files.forEach(file => {
+            promises.push(this.delete(path.join(dir,file)));
+        })
+
+        if (files.length === 0) reject("No files to delete!");
+
+        Promise.all(promises).then(() => {
+            resolve();
+        })
+        .catch(err => reject(err));
+
+    });
+
+})
 
 exports.markFilesInDirectory = (dir, mark) => new Promise((resolve, reject) => {
     
