@@ -139,3 +139,13 @@ exports.upgrade = (argv) => {
     
 
 }
+
+exports.remOld = (argv) => {
+
+    fileio.removeMarkedFiles(".", ".old")
+        .then(() => log.debug("Old files removed!"))
+        .catch(err => {
+            if (err === "No files to delete!") return log.debug(err);
+            log.error(err)
+        });
+}

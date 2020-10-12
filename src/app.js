@@ -77,16 +77,8 @@ yargs.command({
 yargs.command({
     command: 'rem-old',
     describe: 'Remove old files',
-    handler: async (argv) => {
 
-        // fileio.unzip("test.zip","tmp/");
-        fileio.removeMarkedFiles(".", ".old");
-
-        // Get latest asset links
-        //github.getLatestReleaseLink(user, repo);
-        
-
-    }
+    handler: commands.remOld
 });
 
 yargs.command({
