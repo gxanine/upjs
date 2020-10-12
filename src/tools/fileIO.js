@@ -54,6 +54,16 @@ exports.moveFile = (source, destination) => new Promise((resolve, reject) => {
     });
 })
 
+exports.renameFile = (source, destination) => new Promise((resolve, reject) => {
+    if (!fs.existsSync(source)) { return reject(`File '${source}' dose not exist!`); }
+    fs.rename(source, destination, (err) => {
+        if (err)
+        reject(err);
+        else
+            resolve();
+    });
+})
+
 
 exports.unzip = (source, destination) => new Promise((resolve, reject) => {
     extract(source, {dir: path.join(process.cwd(), destination)})
@@ -93,7 +103,7 @@ exports.markFilesInDirectory = (dir, mark) => new Promise((resolve, reject) => {
 
         let promises = [];
         files.forEach(file => {
-            promises.push(this.moveFile(path.join(dir,file), path.join(dir,file + mark)));
+            promises.push(this.renameFile(path.join(dir,file), path.join(dir,file + mark)));
         })
 
         Promise.all(promises).then(() => {
@@ -115,7 +125,7 @@ exports.markSpecificFiles = (dir, files, mark) => new Promise((resolve, reject) 
     
     let promises = [];
     files.forEach(file => {
-        promises.push(this.moveFile(path.join(dir,file), path.join(dir,file + mark)));
+        promises.push(this.renameFile(path.join(dir,file), path.join(dir,file + mark)));
     })
 
     Promise.all(promises).then((err) => {
@@ -156,7 +166,7 @@ exports.unmarkFiles = (dir, mark) => new Promise((resolve, reject) => {
         const filePath = path.join(dir,file);
         const fileNewPath = path.join(dir,fileNew);
 
-        promises.push(this.moveFile(filePath, fileNewPath));
+        promises.push(this.renameFile(filePath, fileNewPath));
     })
 
     Promise.all(promises).then(() => {
