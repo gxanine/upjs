@@ -90,13 +90,11 @@ exports.githubFull = (argv) => {
         if (comaprisonResult < 0) // Current is smaller
         {
 
-            console.log("true");
             return true;
 
         }
         else // if versions are the same or the current one is greater
         {
-            console.log("false");
             reject(false);
 
         }
