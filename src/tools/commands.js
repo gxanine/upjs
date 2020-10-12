@@ -115,6 +115,9 @@ exports.githubFull = (argv) => {
     .then(() => {
         return fileio.delete("upgrade.upjs");
     })
+    .then(() => {
+        log.info(true);
+    })
     .catch(err => log.error(err));
 
 }
