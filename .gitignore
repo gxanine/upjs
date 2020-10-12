@@ -108,3 +108,4 @@ dist
 *.exe
 *.msi
 /bin
+*.upjs
