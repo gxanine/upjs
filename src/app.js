@@ -95,5 +95,40 @@ yargs.command({
     handler: commands.upgrade
 });
 
+yargs.command({
+    command: 'github-full',
+    describe: 'Check for the latest version',
+    builder: {
+        user: {
+            alias: 'u',
+            describe: "Github Username",
+            demandOption: true,
+            type: 'string',
+        },
+        repo: {
+            alias: 'r',
+            describe: "Github repository link (https)",
+            demandOption: true,
+            type: 'string',
+
+        },
+        current: {
+            alias: 'c',
+            describe: "Current version",
+            demandOption: true,
+            type: 'string',
+
+        },
+        simple: {
+            alias: 's',
+            describe: "Simple output",
+            demandOption: false,
+            type: 'boolean',
+
+        }
+    },
+    handler: commands.githubFull
+});
+
 
 yargs.parse();

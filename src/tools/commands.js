@@ -69,6 +69,55 @@ exports.githubCheck = (argv) => {
 
 }
 
+exports.githubFull = (argv) => {
+
+    config.simple = argv['simple'];
+    const user = argv['user'];
+    const repo = argv['repo'];
+    const current = argv['current'];
+
+
+    github.getLatestReleaseVersion(user, repo)
+    .then(( latest ) => {
+
+        if (!latest) return reject("Could not find the latest version...");
+
+
+        let comaprisonResult = versionManager.comapreVersions(current, latest)
+        if (comaprisonResult < 0) // Current is smaller
+        {
+
+            console.log("true");
+            return true;
+
+        }
+        else // if versions are the same or the current one is greater
+        {
+            console.log("false");
+            reject(false);
+
+        }
+    })
+    .then(() => {
+        return github.downloadLatestRelease(user, repo)
+    })
+    .then (() => {
+        return fileio.deleteTemp()
+    })
+    .then(() => {
+        return fileio.upgradeFromZip("upgrade.upjs");
+    })
+    .then(() => {
+        log.debug();
+        log.debug("☑ Files upgraded successfully!");
+    })
+    .then(() => {
+        return fileio.delete("upgrade.upjs");
+    })
+    .catch(err => log.error(err));
+
+}
+
 exports.clear = () => {
     fileio.deleteTemp();
 }
