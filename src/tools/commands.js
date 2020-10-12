@@ -13,6 +13,7 @@ exports.githubGet = (argv) => {
     config.simple = argv['simple'];
     const user = argv['user'];
     const repo = argv['repo'];
+    const name = argv['name'];
 
     log.debug("github: ");
     log.debug("   user: ", user);
@@ -25,7 +26,7 @@ exports.githubGet = (argv) => {
 
     // Downlaod the newest version
     
-    github.downloadLatestRelease(user, repo)
+    github.downloadLatestRelease(user, repo, name)
     .then(() => {
         // if (!result) return;
         // log.log(result);
@@ -75,6 +76,8 @@ exports.githubFull = (argv) => {
     const user = argv['user'];
     const repo = argv['repo'];
     const current = argv['current'];
+    const name = argv['name'];
+
 
 
     github.getLatestReleaseVersion(user, repo)
@@ -99,7 +102,7 @@ exports.githubFull = (argv) => {
         }
     })
     .then(() => {
-        return github.downloadLatestRelease(user, repo)
+        return github.downloadLatestRelease(user, repo, name)
     })
     .then (() => {
         return fileio.deleteTemp()

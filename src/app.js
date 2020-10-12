@@ -22,6 +22,12 @@ yargs.command({
             type: 'string',
 
         },
+        name: {
+            alias: 'n',
+            describe: "Release name (e.g. 'windows.zip')",
+            demandOption: false,
+            type: 'string'
+        },
         simple: {
             alias: 's',
             describe: "Simple output",
@@ -136,6 +142,12 @@ yargs.command({
             demandOption: true,
             type: 'string',
 
+        },
+        name: {
+            alias: 'n',
+            describe: "Release name (e.g. 'windows.zip')",
+            demandOption: false,
+            type: 'string'
         },
         simple: {
             alias: 's',

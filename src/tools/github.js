@@ -5,14 +5,14 @@ const log = require('./log');
 const octokit = new Octokit();
 
 
-const getAssetId = (release) => {
+const getAssetId = (release, releaseName = ".zip") => {
 
     
     try {
         let assetId = "";
 
         release['assets'].forEach(element => {
-            if (element['name'].includes(".zip"))
+            if (element['name'].includes(releaseName))
             {
                 assetId = element['id'];
                 return false;
@@ -106,13 +106,14 @@ exports.getLatestReleaseVersion = (user, repo) => new Promise((resolve, reject) 
     
 })
 
-exports.downloadLatestRelease =  (user, repo) => new Promise((resolve, reject) => {
+exports.downloadLatestRelease =  (user, repo, releaseName = "") => new Promise((resolve, reject) => {
 
         getLatestReleaseJson(user, repo)
         .then((releaseJson) => {
             if (!releaseJson) reject();
 
-            let assetID = getAssetId(releaseJson);
+            let assetID = releaseName === "" ? getAssetId(releaseJson) : getAssetId(releaseJson,releaseName);
+
             if (assetID == '') return reject("Could not find update package...");
             
             let url = getAssetLink(releaseJson, assetID);
