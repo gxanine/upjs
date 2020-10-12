@@ -107,3 +107,4 @@ dist
 *.old
 *.exe
 *.msi
+/bin
