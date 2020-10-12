@@ -1,6 +1,8 @@
 const config = require('../config');
 
 exports.info = (...args) => {
+
+    args.map(arg => { return arg + "\r\n"})
     console.log(...args);
 };
 
