@@ -16,7 +16,7 @@ exports.downloadFile = (url, output) => new Promise((resolve, reject) => {
 
         response.pipe(file);
         file.on('finish', () => {
-            console.log();
+            log.debug();
             file.close(() => resolve());  // close() is async, call cb after close completes.
         });
 

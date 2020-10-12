@@ -15,9 +15,11 @@ exports.error = (...args) => {
 }
 
 exports.progress = (msg, progress) => {
-    process.stdout.clearLine();
-    process.stdout.cursorTo(0);
-    process.stdout.write(msg + ' ' + progress + '%');
+    if (!config.simple) {
+        process.stdout.clearLine();
+        process.stdout.cursorTo(0);
+        process.stdout.write(msg + ' ' + progress + '%');
+    }
 }
 
 
