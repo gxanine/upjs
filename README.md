@@ -36,7 +36,8 @@ Those are only the sample commands but you can get the full list of available co
 2. Run `npm install`
 3. Install ***[pkg](https://github.com/vercel/pkg)*** with `npm install pkg -g`
 4. Run `npm run build`
-5. *Optional:* if you're on Windows run `npm run win-add-icon` to add an icon to your executable
+5. *Optional:* if you're on Windows run `npm run win-add-icon` to add an icon to your executable 
+##### UPDATE: don't run the step ***5***. I mean you can try but it breaks the exe for me `¯\_(ツ)_/¯`
 ---
 
 With ❤ and ☕ by Greg
