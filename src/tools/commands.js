@@ -119,6 +119,9 @@ exports.githubFull = (argv) => {
 }
 
 exports.clear = () => {
+
+    config.simple = argv['simple'];
+
     fileio.deleteTemp();
 }
 
@@ -141,6 +144,8 @@ exports.upgrade = (argv) => {
 }
 
 exports.remOld = (argv) => {
+
+    config.simple = argv['simple'];
 
     fileio.removeMarkedFiles(".", ".old")
         .then(() => log.debug("Old files removed!"))

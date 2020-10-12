@@ -71,19 +71,45 @@ yargs.command({
 yargs.command({
     command: 'clear',
     describe: 'Remove temp',
+    builder: {
+        simple: {
+            alias: 's',
+            describe: "Simple output",
+            demandOption: false,
+            type: 'boolean',
+
+        }
+    },
     handler: commands.clear
 });
 
 yargs.command({
     command: 'rem-old',
     describe: 'Remove old files',
+    builder: {
+        simple: {
+            alias: 's',
+            describe: "Simple output",
+            demandOption: false,
+            type: 'boolean',
 
+        }
+    },
     handler: commands.remOld
 });
 
 yargs.command({
     command: 'upgrade',
     describe: 'Upgrade from zip',
+    builder: {
+        simple: {
+            alias: 's',
+            describe: "Simple output",
+            demandOption: false,
+            type: 'boolean',
+
+        }
+    },
     handler: commands.upgrade
 });
 
